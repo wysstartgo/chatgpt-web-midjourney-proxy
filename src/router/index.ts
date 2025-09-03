@@ -88,9 +88,6 @@ const routes: RouteRecordRaw[] = [
         component: () => import('@/views/suno/music.vue'),
       },
     ],
-
-    
-
   },
   {
     path: '/video',
@@ -140,7 +137,11 @@ const routes: RouteRecordRaw[] = [
   //   name: 'mytest',
   //   component: () => import('@/views/mj/myTest.vue'),
   // },
-
+	{
+		path: '/videotasks',
+		name: 'videotasks',
+		component: () => import('@/views/videotasks/RunTaskPanel.vue'),
+	},
   {
     path: '/404',
     name: '404',
