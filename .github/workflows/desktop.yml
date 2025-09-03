@@ -106,16 +106,15 @@ jobs:
       # —— 关键：把 base64 的私钥还原为“多行”环境变量，避免注释行丢失 ——
       - name: Restore Tauri updater private key (multiline safe)
         if: ${{ secrets.TAURI_PRIVATE_KEY_B64 != '' }}
+        env:
+          TAURI_PRIVATE_KEY_B64: ${{ secrets.TAURI_PRIVATE_KEY_B64 }}
         run: |
           echo "$TAURI_PRIVATE_KEY_B64" | base64 --decode > private.key
           {
             echo 'TAURI_PRIVATE_KEY<<EOF'
             cat private.key
             echo 'EOF'
-          } >> $GITHUB_ENV
-        shell: bash
-        env:
-          TAURI_PRIVATE_KEY_B64: ${{ secrets.TAURI_PRIVATE_KEY_B64 }}
+          } >> "$GITHUB_ENV"
 
 
       - name: Build with tauri-action
