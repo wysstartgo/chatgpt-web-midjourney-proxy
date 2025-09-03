@@ -117,6 +117,7 @@ jobs:
         env:
           TAURI_PRIVATE_KEY_B64: ${{ secrets.TAURI_PRIVATE_KEY_B64 }}
 
+
       - name: Build with tauri-action
         uses: tauri-apps/tauri-action@v0
         env:
