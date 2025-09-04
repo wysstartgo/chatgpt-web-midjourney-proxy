@@ -1,19 +1,19 @@
 use chrono::Local;
+use log::{Level, LevelFilter, Metadata, Record, SetLoggerError};
 use once_cell::sync::OnceCell;
 use serde::Serialize;
 use std::{
     collections::VecDeque,
     sync::{Arc, Mutex},
 };
-use tauri::{AppHandle, Manager};
-use log::{Level, Metadata, Record, SetLoggerError, LevelFilter};
-
+use tauri::{AppHandle, Emitter};
+use crate::timeUtil::{utc_to_sh_rfc3339, now_sh_rfc3339, now_utc_ms};
 static APP_HANDLE: OnceCell<AppHandle> = OnceCell::new();
 
 #[derive(Debug, Clone, Serialize)]
 pub struct LogEntry {
     pub id: u64,
-    pub ts: String,         // RFC3339
+    pub ts: String, // RFC3339
     pub level: String,
     pub target: String,
     pub message: String,
@@ -51,7 +51,10 @@ impl LogBuffer {
     }
 
     pub fn level(&self) -> LevelFilter {
-        self.inner.lock().map(|g| g.level).unwrap_or(LevelFilter::Info)
+        self.inner
+            .lock()
+            .map(|g| g.level)
+            .unwrap_or(LevelFilter::Info)
     }
 
     fn push(&self, level: Level, target: &str, msg: String) {
@@ -59,7 +62,7 @@ impl LogBuffer {
         g.seq += 1;
         let entry = LogEntry {
             id: g.seq,
-            ts: Local::now().to_rfc3339(),
+            ts: now_sh_rfc3339(),
             level: level.to_string(),
             target: target.to_string(),
             message: msg.clone(),
@@ -69,13 +72,11 @@ impl LogBuffer {
         }
         g.buf.push_back(entry.clone());
 
-        // 事件广播（若 app 已就绪）
         if let Some(app) = APP_HANDLE.get() {
-            let _ = app.emit_all("app_log", &entry);
+            let _ = app.emit("app_log", &entry);
         }
     }
 
-    /// 增量查询：返回 (entries, latest_id)
     pub fn get_since(&self, since_id: Option<u64>, limit: Option<usize>) -> (Vec<LogEntry>, u64) {
         let g = self.inner.lock().unwrap();
         let latest = g.seq;
@@ -106,7 +107,6 @@ pub fn global_log_buffer() -> &'static Arc<LogBuffer> {
     LOGGER.get().expect("logger not inited")
 }
 
-/// 简单 Logger 实现：把 log::Record 写入缓冲
 struct RingLogger;
 
 impl log::Log for RingLogger {
@@ -127,8 +127,11 @@ impl log::Log for RingLogger {
 
 static RING_LOGGER: RingLogger = RingLogger;
 
-/// 在 tauri setup 期间调用
-pub fn init_logger(app: &AppHandle, max_len: usize, level: LevelFilter) -> Result<(), SetLoggerError> {
+pub fn init_logger(
+    app: &AppHandle,
+    max_len: usize,
+    level: LevelFilter,
+) -> Result<(), SetLoggerError> {
     let _ = APP_HANDLE.set(app.clone());
     let _ = LOGGER.set(Arc::new(LogBuffer::new(max_len, level)));
     log::set_logger(&RING_LOGGER)?;

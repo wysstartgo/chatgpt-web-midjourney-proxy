@@ -6,6 +6,7 @@ import { ChatLayout } from '@/views/chat/layout'
 import mjlayout from '@/views/mj/layout.vue'
 import sunoLayout from '@/views/suno/layout.vue'
 import lumaLayout from '@/views/luma/layout.vue'
+import videotasksLayout from '@/views/videotasks/layout.vue'
 
 const routes: RouteRecordRaw[] = [
   {
@@ -78,7 +79,7 @@ const routes: RouteRecordRaw[] = [
 
     {
     path: '/music',
-    name: 'music',
+    name: 'Rootmusic',
     component: sunoLayout,
     redirect: '/music/index',
     children: [
@@ -91,7 +92,7 @@ const routes: RouteRecordRaw[] = [
   },
   {
     path: '/video',
-    name: 'video',
+    name: 'Rootvideo',
     component: lumaLayout,
     redirect: '/video/index',
     children: [
@@ -105,7 +106,7 @@ const routes: RouteRecordRaw[] = [
 
   {
     path: '/dance',
-    name: 'dance',
+    name: 'Rootdance',
     component: lumaLayout,
     redirect: '/dance/index',
     children: [
@@ -119,7 +120,7 @@ const routes: RouteRecordRaw[] = [
 
   {
     path: '/wav',
-    name: 'wav',
+    name: 'Rootwav',
     component: lumaLayout,
     redirect: '/wav/index',
     children: [
@@ -130,6 +131,19 @@ const routes: RouteRecordRaw[] = [
       },
     ],
   },
+	{
+		path: '/videotasks',
+		name: 'Rootvideotasks',
+		component: videotasksLayout,
+		redirect: '/videotasks/index',
+		children: [
+			{
+				path: '/videotasks/:uuid?',
+				name: 'videotasks',
+				component: () => import('@/views/videotasks/RunTaskPanel.vue'),
+			},
+		],
+	},
 
   //调试
   // {
@@ -137,11 +151,11 @@ const routes: RouteRecordRaw[] = [
   //   name: 'mytest',
   //   component: () => import('@/views/mj/myTest.vue'),
   // },
-	{
-		path: '/videotasks',
-		name: 'videotasks',
-		component: () => import('@/views/videotasks/RunTaskPanel.vue'),
-	},
+	// {
+	// 	path: '/videotasks',
+	// 	name: 'videotasks',
+	// 	component: () => import('@/views/videotasks/RunTaskPanel.vue'),
+	// },
   {
     path: '/404',
     name: '404',
