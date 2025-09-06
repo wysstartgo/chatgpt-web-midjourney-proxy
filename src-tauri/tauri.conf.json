@@ -66,6 +66,7 @@
         "width": 960,
         "hiddenTitle": true,
         "titleBarStyle": "Overlay",
+				"devtools": true,
         "useHttpsScheme": true
       }
     ],
