@@ -5,6 +5,8 @@ import vue from '@vitejs/plugin-vue'
 import { VitePWA } from 'vite-plugin-pwa'
 import { viteStaticCopy } from 'vite-plugin-static-copy'
 
+const isTauri = !!process.env.TAURI || !!process.env.TAURI_PLATFORM
+
 function setupPlugins(env: ImportMetaEnv): PluginOption[] {
   return [
     vue(),
@@ -17,7 +19,8 @@ function setupPlugins(env: ImportMetaEnv): PluginOption[] {
       ],
     }),
     VitePWA({ // env.VITE_GLOB_APP_PWA === 'true' &&
-      injectRegister: 'auto',
+			// Tauri 桌面构建禁用注入（不往 index.html 写 /registerSW.js）
+			injectRegister: isTauri ? null : 'auto',
       manifest: {
         name: 'chatGPT-MJ',
         short_name: 'chatGPT-MJ',
@@ -57,13 +60,13 @@ export default defineConfig((env) => {
         },
          '/sunoapi': {
           target: viteEnv.VITE_APP_API_BASE_URL,
-          changeOrigin: true, // 允许跨域  
+          changeOrigin: true, // 允许跨域
         },
          '/uploads': {
           target: viteEnv.VITE_APP_API_BASE_URL,
           changeOrigin: true, // 允许跨域
           //rewrite: path => path.replace('/api/', '/'),
-        }, 
+        },
         '/openapi': {
           target: viteEnv.VITE_APP_API_BASE_URL,
           changeOrigin: true, // 允许跨域
@@ -73,7 +76,7 @@ export default defineConfig((env) => {
           target: viteEnv.VITE_APP_API_BASE_URL,
           changeOrigin: true, // 允许跨域
           //rewrite: path => path.replace('/api/', '/'),
-        }, 
+        },
         //
         '/viggle': {
           target: viteEnv.VITE_APP_API_BASE_URL,
@@ -85,7 +88,7 @@ export default defineConfig((env) => {
           changeOrigin: true, // 允许跨域
           //rewrite: path => path.replace('/api/', '/'),
         },
-        
+
       },
     },
     build: {
