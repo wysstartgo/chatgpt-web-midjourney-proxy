@@ -67,7 +67,7 @@
         "hiddenTitle": true,
         "titleBarStyle": "Overlay",
 				"devtools": true,
-        "useHttpsScheme": true
+        "useHttpsScheme": false
       }
     ],
     "security": {
