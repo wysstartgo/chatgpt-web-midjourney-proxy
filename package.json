@@ -21,6 +21,7 @@
     "buildold": "run-p type-check build-only",
     "preview": "vite preview",
     "build-only": "vite build",
+		"build:tauri": "vite build --mode tauri",
     "type-check": "vue-tsc --noEmit",
     "lint": "eslint .",
     "lint:fix": "eslint . --fix",
