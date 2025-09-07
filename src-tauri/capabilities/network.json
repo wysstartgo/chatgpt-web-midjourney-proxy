@@ -1,0 +1,13 @@
+{
+	"identifier": "network",
+	"windows": ["main"],
+	"permissions": [
+		{
+			"identifier": "http:default",
+			"allow": [
+				{ "url": "http://127.0.0.1:3002/*" },
+				{ "url": "https://*/*" }
+			]
+		}
+	]
+}
