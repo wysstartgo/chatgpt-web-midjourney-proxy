@@ -1,7 +1,7 @@
 {
   "$schema": "../node_modules/@tauri-apps/cli/schema.json",
   "build": {
-    "beforeBuildCommand": "TAURI=1 yarn build",
+		"beforeBuildCommand": "yarn build --mode tauri",
     "beforeDevCommand": "yarn dev",
     "frontendDist": "../dist",
     "devUrl": "http://localhost:1002"
@@ -27,10 +27,10 @@
     "longDescription": "GPT&Midjourney( GPT-MJ) is a cross-platform ChatGPT and Midjourney client, including Web/Win/Linux/OSX/PWA.",
     "macOS": {
       "entitlements": null,
-      "exceptionDomain": "",
       "frameworks": [],
       "providerShortName": null,
-      "signingIdentity": null
+      "signingIdentity": null,
+			"exceptionDomain": "127.0.0.1"
     },
     "resources": [],
     "shortDescription": "ChatGPT and Midjourney App",
