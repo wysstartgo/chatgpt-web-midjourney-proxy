@@ -49,7 +49,8 @@
       },
       "notification": {
         "all": true
-      }
+      },
+			"http": { "request": true }
     },
     "bundle": {
       "active": true,
@@ -73,7 +74,8 @@
         "exceptionDomain": "",
         "frameworks": [],
         "providerShortName": null,
-        "signingIdentity": null
+        "signingIdentity": null,
+				"devtools": true
       },
       "resources": [],
       "shortDescription": "ChatGPT and Midjourney App",
@@ -81,7 +83,8 @@
       "windows": {
         "certificateThumbprint": null,
         "digestAlgorithm": "sha256",
-        "timestampUrl": ""
+        "timestampUrl": "",
+				"devtools": true
       }
     },
     "security": {
@@ -107,7 +110,8 @@
         "title": "ChatGPT and Midjourney",
         "width": 960,
         "hiddenTitle": true,
-        "titleBarStyle": "Overlay"
+        "titleBarStyle": "Overlay",
+				"devtools": true
       }
     ]
   }
