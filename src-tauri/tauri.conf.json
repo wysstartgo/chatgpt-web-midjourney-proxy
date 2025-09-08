@@ -74,8 +74,7 @@
         "exceptionDomain": "",
         "frameworks": [],
         "providerShortName": null,
-        "signingIdentity": null,
-				"devtools": true
+        "signingIdentity": null
       },
       "resources": [],
       "shortDescription": "ChatGPT and Midjourney App",
@@ -83,8 +82,7 @@
       "windows": {
         "certificateThumbprint": null,
         "digestAlgorithm": "sha256",
-        "timestampUrl": "",
-				"devtools": true
+        "timestampUrl": ""
       }
     },
     "security": {
@@ -110,8 +108,7 @@
         "title": "ChatGPT and Midjourney",
         "width": 960,
         "hiddenTitle": true,
-        "titleBarStyle": "Overlay",
-				"devtools": true
+        "titleBarStyle": "Overlay"
       }
     ]
   }
